@@ -28,14 +28,14 @@ def binom_rec(n, k):
     if n == 0 or n == k:
         return 1
     else:
-        return binom_rec(n-1, k-1) + binom_rec(n-1, k-1)
+        return binom_rec(n-1, k-1) + binom_rec(n-1, k)
 
 @functools.lru_cache()
 def binom_rec_memoized(n, k):
     if n == 0 or n == k:
         return 1
     else:
-        return binom_rec_memoized(n-1, k-1) + binom_rec_memoized(n-1, k-1)
+        return binom_rec_memoized(n-1, k-1) + binom_rec_memoized(n-1, k)
 
 def binom_fact(n, k, fact=fact_iter):
     return fact(n) // (fact(k) * fact(n-k))
