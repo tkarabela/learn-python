@@ -25,14 +25,14 @@ def fact_iter(n):
 
 
 def binom_rec(n, k):
-    if n == 0 or n == k:
+    if k == 0 or k == n:
         return 1
     else:
         return binom_rec(n-1, k-1) + binom_rec(n-1, k)
 
 @functools.lru_cache()
 def binom_rec_memoized(n, k):
-    if n == 0 or n == k:
+    if k == 0 or k == n:
         return 1
     else:
         return binom_rec_memoized(n-1, k-1) + binom_rec_memoized(n-1, k)
@@ -58,7 +58,13 @@ def print_triangle(triangle, width=60):
 
 
 def main():
-    print_triangle(pascal(10))
+    N = 10
+
+    for k in range(N+1):
+        assert binom_rec(N, k) == binom_rec_memoized(N, k)
+        assert binom_rec(N, k) == binom_fact(N, k)
+
+    print_triangle(pascal(N))
 
 
     print("\nTo compute Pascal triangle for N=15:")
