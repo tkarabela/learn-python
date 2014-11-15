@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import random
 from collections import Counter
 
@@ -22,7 +24,8 @@ def median(xs):
 
 def mode(xs):
     ctr = Counter(xs)
-    return ctr.most_common(1)[0]
+    element, num_occurrences = ctr.most_common(1)[0]
+    return element
 
 
 def main():
@@ -41,6 +44,9 @@ def main():
         print("Sample standard deviation =", xdev)
         print("Median =", xmed)
         print()
+
+    text = "abracadabra"
+    print("The most frequent letter in", text, "is:", mode(text))
 
 if __name__ == "__main__":
     main()
