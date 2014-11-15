@@ -1,5 +1,19 @@
 #!/usr/bin/env python3
 
+"""
+Statistics
+
+Features:
+numerical computation
+generating random numbers
+collections.Counter
+polymorphism (str ~ list)
+
+References:
+http://en.wikipedia.org/wiki/Normal_distribution
+
+"""
+
 import random
 from collections import Counter
 

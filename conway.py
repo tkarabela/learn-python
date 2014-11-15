@@ -1,5 +1,23 @@
 #!/usr/bin/env python3
 
+"""
+Conway's Game of Life
+
+Features:
+sets, tuples
+generators
+functional programming
+creating images via the PIL/Pillow library
+
+Requirements:
+pip install pillow
+
+References:
+http://www.conwaylife.com/wiki/Conway%27s_Game_of_Life
+https://github.com/python-pillow/Pillow
+
+"""
+
 from itertools import chain
 from PIL import Image, ImageChops
 from PIL.GifImagePlugin import getheader, getdata

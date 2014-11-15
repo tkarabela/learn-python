@@ -1,5 +1,19 @@
 #!/usr/bin/env python3
 
+"""
+Morse code
+
+Features:
+dicts, dict comprehension
+testing via assert
+raising an exception
+optional function arguments
+
+References:
+http://en.wikipedia.org/wiki/Morse_code
+
+"""
+
 ENCODING_TABLE = {
     "A": ".-",
     "B": "-...",

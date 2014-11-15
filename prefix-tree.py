@@ -1,5 +1,20 @@
 #!/usr/bin/env python3
 
+"""
+Prefix tree (Trie)
+
+Features:
+tree datastructure
+defining a class
+magical methods (__contains__)
+recursion
+generators
+
+References:
+http://en.wikipedia.org/wiki/Trie
+
+"""
+
 class Node:
     def __init__(self):
         self.children = {}

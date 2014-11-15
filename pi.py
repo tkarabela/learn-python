@@ -1,5 +1,18 @@
 #!/usr/bin/env python3
 
+"""
+Approximating pi
+
+Features:
+numerical computation
+numerical types (limited & arbitrary precision floating point, fractions)
+
+References:
+http://en.wikipedia.org/wiki/Pi
+http://en.wikipedia.org/wiki/Machin-like_formula
+
+"""
+
 from fractions import Fraction
 import decimal
 

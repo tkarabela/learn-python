@@ -1,5 +1,19 @@
 #!/usr/bin/env python3
 
+"""
+Pascal's triangle
+
+Features:
+recursion
+using decorators
+pretty printing
+measuring performance (timeit module)
+
+References:
+http://en.wikipedia.org/wiki/Pascal%27s_triangle
+
+"""
+
 import functools
 import timeit
 
