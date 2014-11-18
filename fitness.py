@@ -35,7 +35,7 @@ def rank(strategy):
     mass = 1
 
     for year, (growth, production) in enumerate(strategy, 1):
-        p = (5/6)**(year-1) * 1/6 if year != 6 else 1-psum
+        p = (5/6)**(year-1) * 1/6 if year != yrs else 1-psum
         psum += p
 
         total_gain += production * mass
