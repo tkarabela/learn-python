@@ -8,6 +8,27 @@ object-oriented programming
 recursion
 tree traversal
 prettyprinting
+serialisation
+CSV
+JSON
+visualising graphs
+
+Tasks:
+read CSV_FILE into dict of Employees
+make a method to add a subordinate, enforcing tree hierarchy
+count subordinates, sum wages of boss and their subordinates
+count superiors, find common superior
+pretty print the hierarchy into console
+save dict of Employees to CSV file
+make a method to_dict()/from_dict()
+save dict of Employees to JSON file
+read JSON file into dict of employees
+pretty print the hierarchy into image (use GraphViz)
+
+References:
+http://en.wikipedia.org/wiki/Tree_%28data_structure%29
+http://json.org/
+http://www.graphviz.org/
 
 """
 
@@ -62,6 +83,19 @@ class Employee:
             person.print_hierarchy(level+1)
 
 
+CSV_FILE = """\
+name;wage;boss
+Bill Boss;40000;
+Anne Assistant;12000;Bill Boss
+Marry Manager;25000;Bill Boss
+Morgan Manager;15000;Bill Boss
+Gerry;12000;Tom
+Tom;15000;Marry Manager
+Paul;12000;Morgan Manager
+Irwin;12000;Morgan Manager
+Ronald;12000;Marry Manager
+"""
+
 def main():
     bill = Employee("Bill Boss")
     anne = Employee("Anne Assistant")
@@ -78,7 +112,7 @@ def main():
     morgan.add_subordinates(irwin, paul)
     tom.add_subordinates(gerry)
 
-    for employee in [bill, anne, mary, morgan, gerry, tom, paul, irwin]:
+    for employee in [bill, anne, mary, morgan, gerry, tom, paul, irwin, ronald]:
         print(employee.name, "earns", employee.wage(), "CZK and has", employee.count_subordinates(), "subordinates")
 
     print("\nHierarchy from Bill's point of view:")
