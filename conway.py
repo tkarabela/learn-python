@@ -38,10 +38,10 @@ def tick(world):
 
         # Any live cell with fewer than two live neighbours dies, as if caused by under-population.
         # Any live cell with two or three live neighbours lives on to the next generation.
+        # Any live cell with more than three live neighbours dies, as if by overcrowding.
         if living and 2 <= neighbors <= 3:
             new_world.add(point)
 
-        # Any live cell with more than three live neighbours dies, as if by overcrowding.
         # Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
         if not living and neighbors == 3:
             new_world.add(point)
