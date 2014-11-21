@@ -10,6 +10,17 @@ magical methods (__contains__)
 recursion
 generators
 
+Tasks:
+write a Trie class to store strings
+implement collections.abc.Set (or MutableSet) for your class
+implement a method to query if Trie contains a word with given prefix
+implement a method to return all words with given prefix (use list or generator)
+download some text corpus (eg. from Project Gutenberg), fill Trie with words,
+measure performance (use the "timeit" module) of:
+- full word query vs. set(words), list(words)
+- prefix query vs. set(words), list(words)
+describe how many steps are needed in a query (discuss computational complexity)
+
 References:
 http://en.wikipedia.org/wiki/Trie
 
