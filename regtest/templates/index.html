@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Regex Tester</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename="style.css") }}">
+</head>
+<body>
+    <h1>Regex Tester</h1>
+
+    {% if show_result %}
+        <p>Pattern:</p>
+        <pre>{{ pattern }}</pre>
+
+        <p>Matched text:</p>
+        {% autoescape false %}
+        <pre class="highlighted-matches">{{ highlighted_text }}</pre>
+        {% endautoescape %}
+    {% endif %}
+
+    <hr>
+
+    <form action="{{ url_for("index") }}" method="post">
+        <label for="text">Input text: </label><textarea type="text" id="text" name="text">{{ text }}</textarea><br>
+        <label for="pattern">Regex pattern: </label><input type="text" id="pattern" name="pattern" value="{{ pattern }}"><br>
+        <label for="ic">re.IGNORECASE </label><input type="checkbox" id="ic" name="ignorecase"><br>
+        <label for="ml">re.MULTILINE </label><input type="checkbox" id="ml" name="multiline"><br>
+        <br>
+        <input type="submit">
+    </form>
+
+</body>
+</html>

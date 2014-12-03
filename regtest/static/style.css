@@ -1,0 +1,25 @@
+body {
+    width: 800px;
+    margin: 50px auto;
+    font-family: sans-serif;
+}
+
+.highlighted-matches {
+    font-family: sans-serif;
+}
+
+.highlighted-matches b {
+    text-decoration: underline;
+}
+
+.highlighted-matches b:nth-of-type(3n+1) {
+    color: red;
+}
+
+.highlighted-matches b:nth-of-type(3n+2) {
+    color: green;
+}
+
+.highlighted-matches b:nth-of-type(3n+3) {
+    color: violet;
+}
