@@ -1,0 +1,15 @@
+@import url("http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css");
+
+body {
+    width: 800px;
+    margin: 50px auto;
+    font-family: sans-serif;
+}
+
+.dir-table {
+    width: 100%;
+}
+
+th {
+    text-align: left;
+}

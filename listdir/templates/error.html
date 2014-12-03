@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Oops!</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename="style.css") }}">
+</head>
+<body>
+    <h1>An error has occured!</h1>
+    {% autoescape false %}
+    <p>{{ message }}</p>
+    {% endautoescape %}
+</body>
+</html>

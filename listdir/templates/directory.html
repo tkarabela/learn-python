@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Listing directory {{ directory }}</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename="style.css") }}">
+</head>
+<body>
+    <h1>Listing directory {{ directory }}</h1>
+
+    <table class="dir-table">
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Size</th>
+        </tr>
+
+        {% for entry, info in entries|dictsort %}
+        <tr>
+            {% if info.is_dir %}
+            <td><i class="fa fa-folder"></i></td>
+            <td><a href="{{ url_for("filesystem", directory=info.fullpath) }}">{{ entry }}</a></td>
+            <td></td>
+            {% else %}
+            <td><i class="fa fa-file-o"></i></td>
+            <td>{{ entry }}</td>
+            <td>{{ info.size|default("N/A") }}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
