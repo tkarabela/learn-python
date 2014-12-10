@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Article index</title>
+</head>
+<body>
+
+<h1>Article index</h1>
+
+<p><a href="{{ url_for('new_article') }}">Create new article</a></p>
+
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Created on</th>
+        <th>Word count</th>
+    </tr>
+
+    {% for article in articles %}
+    <tr>
+        <td><a href="{{ url_for('show_article', article_id=article.id) }}">{{ article.title }}</a></td>
+        <td>{{ article.ctime.strftime('%Y-%m-%d') }}</td>
+        <td>{{ article.word_count() }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

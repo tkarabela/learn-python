@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Editing {{ article.title }}</title>
+</head>
+<body>
+<form action="" method="POST">
+    <input type="submit" value="Save changes">
+    or <a href="{{ url_for('show_article', article_id=article.id) }}">go back to article</a>
+    (or <a href="{{ url_for('delete_article', article_id=article.id) }}">delete</a>)
+    <br>
+    <br>
+    Title: <input type="text" name="title" value="{{ article.title }}">
+    <br>
+    <br>
+    Article text (Markdown):
+    <br>
+    <textarea rows="20" cols="60" name="text">{{ article.text }}</textarea>
+</form>
+</body>
+</html>
