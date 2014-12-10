@@ -100,6 +100,10 @@ def edit_article(article_id):
 @app.route("/article/<int:article_id>/delete")
 def delete_article(article_id):
     article = Article.query.get(article_id)
+
+    if article is None:
+        abort(http.client.NOT_FOUND)
+
     db.session.delete(article)
     db.session.commit()
     app.logger.info("Deleted article #%d", article.id)
