@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<!--
+    The code is rather messy, sorry.
+-->
+<html>
+<head>
+    <title>Interactive Graph Builder</title>
+    <meta charset='utf-8'>
+    <style type="text/css">
+svg {
+    outline: thin solid black;
+    clear: both;
+}
+
+circle {
+    fill: silver;
+    r: 10;
+    stroke: black;
+}
+
+circle.selected {
+    fill: red;
+    r: 12;
+}
+
+line {
+    stroke: black;
+    stroke-width: 2;
+}
+
+line.highlighted {
+    stroke: blue;
+    stroke-width: 5;
+}
+
+#textarea {
+    left: 820px;
+    width: 500px;
+    height: 500px;
+    top: 8px;
+    position: absolute;
+}
+
+    </style>
+
+</head>
+<body>
+
+<script type="text/javascript">
+var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+svg.setAttribute("height",540);
+svg.setAttribute("width",800);
+document.body.appendChild(svg);
+
+console.log(svg);
+
+var points = [];
+var selected = [];
+var edges = [];
+var highlightedEdges = [];
+var lines = [];
+
+function dumpData() {
+    var data = {
+        nodes: points.map(function(circle, i){return {id: i, x: circle.getAttribute("cx"), y: circle.getAttribute("cy")};}),
+        edges: edges.map(function(pair){return pair.map(function(circle){return points.indexOf(circle);});}),
+        highlightedEdges: highlightedEdges,
+        highlightedNodes: selected.map(function(circle){return points.indexOf(circle);}),
+    };
+
+    var textarea = document.getElementById("textarea");
+    textarea.value = JSON.stringify(data);
+    console.log(data);
+}
+
+function toggleSelection(circle) {
+    var i = selected.indexOf(circle);
+    if (i == -1) {
+        circle.setAttribute("class", "selected");
+        selected.push(circle);
+    } else {
+        circle.setAttribute("class", "unselected");
+        selected.splice(i, 1);
+    }
+
+    console.log(selected);
+}
+
+function addPoint(x, y) {
+    var circle = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+    circle.setAttribute("cx", x);
+    circle.setAttribute("cy", y);
+    circle.setAttribute("r", 10);
+    circle.setAttribute("class", "unselected");
+    svg.appendChild(circle);
+    points.push(circle);
+    console.log(x, y, circle);
+    return circle;
+}
+
+function handleCanvasClick(e) {
+    var elemRect = svg.getBoundingClientRect(),
+    x = e.clientX - (elemRect.left),
+    y = e.clientY - (elemRect.top);
+
+    if (e.target == svg) {
+        var circle = addPoint(x, y);
+        toggleSelection(circle);
+    } else if (points.indexOf(e.target) != -1) {
+        // point click
+        var circle = e.target;
+        toggleSelection(circle);
+    }
+    
+    if (selected.length == 2) {
+        addEdge(selected[0], selected[1], false);
+        while (selected.length > 0) toggleSelection(selected[0]);
+    }
+
+    dumpData();
+}
+
+svg.onclick = handleCanvasClick;
+
+function deleteSelectedPoints() {
+    selected.forEach(function(circ){points.splice(points.indexOf(circ), 1); svg.removeChild(circ);});
+    selected = [];
+}
+
+var deleteBtn = document.createElement("button");
+deleteBtn.innerHTML = "Delete Selected Points";
+deleteBtn.onclick = deleteSelectedPoints;
+document.body.appendChild(deleteBtn);
+
+
+
+
+function addEdge(start, end, highlighted) {
+    edges.push([start, end]);
+    var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'line');
+        newElement.setAttribute("x1", start.getAttribute("cx"));
+        newElement.setAttribute("x2", end.getAttribute("cx"));
+        newElement.setAttribute("y1", start.getAttribute("cy"));
+        newElement.setAttribute("y2", end.getAttribute("cy"));
+        if (highlighted) {newElement.setAttribute("class", "highlighted");}
+        svg.appendChild(newElement);
+    lines.push(newElement);
+
+    dumpData();
+}
+
+function handleBackground() {
+    /*
+        Image taken from:
+        https://commons.wikimedia.org/wiki/File:Czech_Republic_districts.png
+    */
+
+    if (svg.style.backgroundImage == "none" || svg.style.backgroundImage == "") {
+        svg.style.backgroundImage = "url('background.png')";
+    } else {
+        svg.style.backgroundImage = "none";
+    }
+}
+
+var toggleBackgroundButton = document.createElement("button");
+toggleBackgroundButton.innerHTML = "Toggle background map";
+toggleBackgroundButton.onclick = handleBackground;
+document.body.appendChild(toggleBackgroundButton);
+
+
+
+
+
+function loadFromData() {
+    var textarea = document.getElementById("textarea");
+    var data = JSON.parse(textarea.value);
+    
+    selected = points;
+    deleteSelectedPoints();
+    lines.forEach(function(line){svg.removeChild(line);});
+    points = [];
+    edges = [];
+    highlightedEdges = data.highlightedEdges;
+    lines = [];
+
+    function getPointFromId(id) {
+        var x = data.nodes.find(function(node){return node.id == id;}),
+            i = data.nodes.indexOf(x);
+
+        return points[i];
+    }
+
+    data.nodes.forEach(function(node){addPoint(node.x, node.y);});
+    data.edges.forEach(function(pair){addEdge(getPointFromId(pair[0]), getPointFromId(pair[1]), false);});
+    data.highlightedEdges.forEach(function(pair){addEdge(getPointFromId(pair[0]), getPointFromId(pair[1]), true);});
+    data.highlightedNodes.forEach(function(id){toggleSelection(getPointFromId(id));});
+}
+
+
+
+var loadFomDaTaButton = document.createElement("button");
+loadFomDaTaButton.innerHTML = "Load From JSON";
+loadFomDaTaButton.onclick = loadFromData;
+document.body.appendChild(loadFomDaTaButton);
+
+</script>
+
+<textarea id="textarea">
+{
+    "nodes": [
+        {"id":0,"x":"173","y":"140"},
+        {"id":1,"x":"197","y":"296"},
+        {"id":2,"x":"329","y":"276"},
+        {"id":3,"x":"393","y":"130"},
+        {"id":4,"x":"246","y":"420"},
+        {"id":5,"x":"389","y":"411"},
+        {"id":6,"x":"529","y":"336"}
+    ],
+    "edges": [
+        [0,1],[2,3],[3,0],
+        [4,5],[2,5],[2,1],
+        [1,4],[6,3],[5,6]
+    ],
+    "highlightedEdges": [
+        [1,2],[2,5],[5,6]
+    ],
+    "highlightedNodes": [1,2,3]
+}
+</textarea>
+
+<p>
+Start by clicking on <b>Load from JSON</b>.<br>
+You can add more nodes and edges by clicking on the canvas.<br>
+The textarea on the right represents the graph as you interact with it.<br>
+Try doing some graph processing by copypasing the JSON as input to your program and pasting your output back into the textarea.<br>
+Use the <code>highlightedNodes</code> and <code>highlightedEdges</code> arrays to show your output.<br><br>
+<small>Tested with Firefox 44.</small>
+</p>
+
+<script type="text/javascript">
+    /*
+    addPoint(100, 100);
+    addPoint(200, 200);
+    addEdge(points[0], points[1], false);
+    */
+</script>
+</body>
+</html>
